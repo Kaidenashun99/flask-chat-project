@@ -9,7 +9,7 @@ def index():
     return "To send a message use /USERNAME/MESSAGE"
     
 @app.route('/<username>')
-def username(username):
+def user(username):
     return "Hi" + username
     
 @app.route('/<username>/<message>')
