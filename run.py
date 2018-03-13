@@ -3,17 +3,28 @@ from flask import Flask, redirect, render_template, request
 from datetime import datetime
 
 app = Flask(__name__)
-messages = []
+
+def write_to_file(filename, data):
+    """Handle the process of writing data to a file"""
+    with open(filename, "a") as file:
+        file.writelines(dat)
+
 
 def add_messages(username, message):
-    """Add messages to the messages list"""
-    now = datetime.now().strftime("%H:%M:%S")
-    message_dict = {"timestamp":now, "from":username, "message":message}
-    messages.append(message_dict)
+    """Add messages to the 'messages' text file """
     
-    
+    #write the chat message to the messages.txt file
+    with open("data/messages.txt", "a") as chat_list:
+        chat_list.writelines("({0}) {1} - {2}\n".format(
+        datetime.now().strftime("%H:%M:%S"), 
+        username.title(), 
+        message))
+        
 def get_all_messages():
     """Get all of messages"""
+    messages = []
+    with open("data/messages.txt", "r") as chat_messages:
+        messages = chat_messages.readlines()
     return messages
 
 @app.route('/', methods=["GET", "POST"])
@@ -28,7 +39,8 @@ def index():
 @app.route('/<username>')
 def user(username):
     """Display chat message"""
-    return "<h1>Welcome, {0} </h1>- {1}".format(username, get_all_messages())
+    message = get_all_messages()
+    return render_template("chat.html", username=username, chat_messages=message)
      
 @app.route('/<username>/<message>')
 def send_message(username, message):
