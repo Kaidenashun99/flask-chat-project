@@ -6,8 +6,8 @@
     <body>
         <h1>Welcome, {{ username }}</h1>
         {% for message in chat_messages %}
-        <p>({{ message["timestamp"]}}) {{ message["from"].title() }} - {{ message{"message"} }}</p>
-        {%endfor%}
+        <p>{{ message }}</p>
+        {% endfor %}
         
         <script>
             setTimeout(function () {
