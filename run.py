@@ -7,7 +7,7 @@ app = Flask(__name__)
 def write_to_file(filename, data):
     """Handle the process of writing data to a file"""
     with open(filename, "a") as file:
-        file.writelines(dat)
+        file.writelines(data)
 
 
 def add_messages(username, message):
@@ -32,8 +32,8 @@ def index():
     """Main page with instructions"""
     if request.method == "POST":
         with open("data/users.txt", "a") as user_list:
-            user_list.write(request.form["username"] + "\n")
-        return redirect(request.form["username"])
+            write_to_file("data/users.txt", request.form["username" + "/n"])
+            return redirect(request.form["username"])
     return render_template("index.html")
     
 @app.route('/<username>')
